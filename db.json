@@ -1,12 +1,12 @@
 {
   "movies": [
     {
-      "title": "Casablanca",
-      "rating": "4",
+      "title": "The Room",
+      "rating": "5",
       "id": 1
     },
     {
-      "title": "Star Wars: A New Hope",
+      "title": "The Disaster Artist",
       "rating": "5",
       "id": 2
     }

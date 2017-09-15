@@ -3,15 +3,38 @@
 <head>
     <meta charset="UTF-8" />
     <title>My Application</title>
-    <link rel="stylesheet" href="/style.css" />
+    <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+    <header>
 
+    </header>
     <div class="container">
-        <h1>Hello There!</h1>
-        <p>To get started, edit <code>src/index.js</code>.</p>
+        <!--this will be generated-->
     </div>
+        <div class="formArea">
+            <a id="form-section"></a>
+            <form method="post" action="/db.json">
+                <div>
+                    <input type="text" id="formMovieTitle" placeholder="Enter Movie Title" required>
+                    <input type="hidden" name="id">
+                </div>
 
+                <div>
+                    <label for="formMovieRating" id="labelStarRating">Star Rating</label>
+                    <select id="formMovieRating" name="Rating" required>
+                        <option disabled selected>Star Rating</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                    </select>
+                </div>
+            </form>
+            <button id="submitMovie" class="btn btn-primary">click to add movie</button>
+            <button id="updateMovie" class="btn btn-primary">click to update movie</button>
+        </div>
     <script src="/main.js"></script>
 </body>
 </html>
