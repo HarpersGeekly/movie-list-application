@@ -1,40 +1,75 @@
+<!--movie list application -->
+<!-- - a loading gif opens the page revealing a table that is GET fetched from a db.json file with a movies array that holds movie objects with title, rating, and id.-->
+<!-- - the movie-list is a table, built with an html function, along with edit and delete buttons that correspond to the movies id.-->
+<!-- - users click an add movie button that opens a form where you can input a movie title, a rating, and then POSTS to the json file-->
+<!-- - users click edit which grabs the id, and attaches that attribute to a newly revealed update button, it also populates the form with the movies info, then fetch PATCH's the new info to the json file, then updates the new list.-->
+<!-- -delete button grabs the id in the same way but fetch DELETES to the json file.-->
+<!-- -the movie list expands with newly added entries -->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
     <title>My Application</title>
     <link rel="stylesheet" href="style.css" />
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+    <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
 </head>
 <body>
-    <header>
+    <h1 id="movie-list-header">Movie List</h1>
 
-    </header>
     <div class="container">
         <!--this will be generated-->
     </div>
+    <div class="addMovie">
+        <!--this will be generated-->
+    </div>
+
         <div class="formArea">
             <a id="form-section"></a>
             <form method="post" action="/db.json">
-                <div>
-                    <input type="text" id="formMovieTitle" placeholder="Enter Movie Title" required>
-                    <input type="hidden" name="id">
+
+                <!--<div class="input-field col s12">-->
+                    <!--<input class="validate" type="text" id="formMovieTitle" required>-->
+                    <!--<label for="formMovieTitle" class="active">Enter a Movie Title</label>-->
+                    <!--<input type="hidden" name="id">-->
+                <!--</div>-->
+
+                    <div class="input-field col s6">
+                        <label id="movieTitleFormPlaceholder" for="formMovieTitle" class="active">title:</label>
+                        <input type="text" class="validate" id="formMovieTitle">
+                    </div>
+
+                <div class="input-field col s6">
+                    <input id="last_name" type="text" class="validate">
+                    <label for="last_name">Last Name</label>
                 </div>
 
                 <div>
-                    <label for="formMovieRating" id="labelStarRating">Star Rating</label>
-                    <select id="formMovieRating" name="Rating" required>
-                        <option disabled selected>Star Rating</option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
+                    <!--<label for="formMovieRating" id="labelStarRating">Star Rating</label>-->
+                    <select class="browser-default" id="formMovieRating" name="Rating">
+                        <option id="labelStarRating" value="" disabled selected>Rating</option>
+                        <option value="1">&#9733 </option>
+                        <option value="2">&#9733 &#9733 </option>
+                        <option value="3">&#9733 &#9733 &#9733 </option>
+                        <option value="4">&#9733 &#9733 &#9733 &#9733 </option>
+                        <option value="5">&#9733 &#9733 &#9733 &#9733 &#9733 </option>
                     </select>
                 </div>
+
             </form>
-            <button id="submitMovie" class="btn btn-primary">click to add movie</button>
+            <button id="submitMovie" class="btn btn-primary">click to submit movie</button>
             <button id="updateMovie" class="btn btn-primary">click to update movie</button>
         </div>
+
     <script src="/main.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js">
+
+        $(document).ready(function() {
+            Materialize.updateTextFields();
+        });
+
+    </script>
 </body>
 </html>

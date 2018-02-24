@@ -6,18 +6,43 @@ html, body {
 }
 
 body {
-    background: #dabe5e;
+    /*background: #dabe5e;*/
+    background: url("https://images.pexels.com/photos/390089/film-movie-motion-picture-390089.jpeg?w=1260&h=750&auto=compress&cs=tinysrgb") no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    width:100%;
+    height:100%;
+    margin:0
 }
-
+body:after {
+    position: fixed;
+    content: "";
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: -1;
+}
 .container {
-    min-height: 100vh;
+    /*min-height: 100vh;*/
     width: 85%;
     margin: 1% auto;
     display: flex;
     align-items: center;
     justify-content: center;
     border: 2px solid black;
-    background: darkgray;
+    background: #dddddd;
+}
+
+#movie-list-header {
+    margin-bottom: 50px;
+    font-family: "Big John";
+    font-size: 35px;
+    text-align: center;
+    color: white;
 }
 
 #movie-list {
@@ -28,18 +53,10 @@ body {
     text-align: center;
 }
 
-#movie-list-header {
-    margin-bottom: 50px;
-    font-family: "Big John";
-    font-size: 35px;
-    text-align: center;
-}
-
 .movies {
     font-family: "PT Serif";
     /*align-items: center;*/
-    /*justify-content: center;*/
-    margin: 20px;
+    justify-content: center;
 }
 
 .loader {
@@ -61,7 +78,7 @@ table {
 }
 
 td, th {
-    width: 80%;
+    width: 85%;
     border: 1px solid #dddddd;
     padding: 8px;
     align-items: center;
@@ -69,9 +86,10 @@ td, th {
     text-align: center;
 }
 
-tr:nth-child(even) {
-    background-color: #dddddd;
-}
+/*tr:nth-child(even) {*/
+    /*background-color: #dddddd;*/
+/*}*/
+
 .editBtn {
     width: 10px;
     height: 10px;
@@ -96,20 +114,25 @@ tr:nth-child(even) {
     cursor: pointer;
 }
 
+.addMovie {
+    text-align: center;
+    margin: 1em;
+}
+
 #addMovieBtn{
     position: relative;
     /*width: 10px;*/
     /*height: 10px;*/
     color: white;
-    background: #0a0c77;
+    background-color: black;
     /*margin-top: 50px;*/
     padding: 5px;
     border-radius: 5%;
     align-items: center;
     justify-content: center;
     cursor: pointer;
+    font-family: "Slim Joe";
 }
-
 
 .formArea {
     margin-top: 20px;
@@ -120,22 +143,39 @@ tr:nth-child(even) {
     text-align: center;
 }
 
-#formMovieTitle {
-    width:35%;
-    border-radius: 5px;
-    outline: none;
+.input-field {
+    width: 50%;
+    margin: 0 auto;
+    color: black;
+    font-family: "Big John";
 }
 
+.input-field input:focus {
+    border-bottom: 1px solid gold !important; /*important needed for materialize for some stupid reason*/
+    box-shadow: 0 1px 0 0 gold !important
+}
+
+#movieTitleFormPlaceholder {
+    display: block;
+    text-align: center;
+    /*line-height: 150%;*/
+    font-size: 2em;
+    color: #ffffff;
+    width: 50%;
+    margin: 0 auto;
+}
+
+#formMovieTitle {
+    font-family: "Slim Joe";
+    text-align: center;
+    font-size: 30px;
+
+}
 input[type=text] {
+    color: white;
+    font-size:50px;
     padding: 5px;
     margin: 0px 0;
-    box-sizing: border-box;
-    font-size: 18px;
-    font-weight: bold;
-    font-family: "PT Serif";
-    /* text-align: center; */
-    background-color: aliceblue;
-    text-align: center;
 }
 
 #labelStarRating {
@@ -156,6 +196,8 @@ input[type=text] {
     border-radius: 5px;
     text-align: center;
     outline: none;
+    width: 10em;
+    display: inline-block;
 }
 
 #submitMovie {
@@ -171,6 +213,7 @@ input[type=text] {
     text-align: center;
     outline: none;
     cursor: pointer;
+    background-color: black;
 }
 
 #updateMovie {
@@ -187,4 +230,68 @@ input[type=text] {
     outline: none;
     cursor: pointer;
 }
+
+
+
+
+
+
+
+
+
+
+
+/*
+Max width before this PARTICULAR table gets nasty
+This query will take effect for any screen smaller than 760px
+and also iPads specifically.
+*/
+@media
+only screen and (max-width: 760px),
+(min-device-width: 768px) and (max-device-width: 1024px)  {
+
+    /* Force table to not be like tables anymore */
+    table, thead, tbody, th, td, tr {
+        display: block;
+    }
+
+    /* Hide table headers (but not display: none;, for accessibility) */
+    thead tr {
+        position: absolute;
+        top: -9999px;
+        left: -9999px;
+    }
+
+    tr { border: 1px solid #ccc; }
+
+    td {
+        /* Behave  like a "row" */
+        border: none;
+        border-bottom: 1px solid #eee;
+        position: relative;
+        padding-left: 50%;
+    }
+
+    td:before {
+        /* Now like a table header */
+        position: absolute;
+        /* Top/left values mimic padding */
+        top: 6px;
+        left: 6px;
+        width: 45%;
+        padding-right: 10px;
+        white-space: nowrap;
+    }
+
+    /*
+    Label the data
+    */
+    td:nth-of-type(1):before { content: "Movie Title"; }
+    td:nth-of-type(2):before { content: "Rating"; }
+    td:nth-of-type(3):before { content: "Action"; }
+
+}
+
+
+
 
