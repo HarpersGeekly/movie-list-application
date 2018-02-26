@@ -2,23 +2,32 @@
  * es6 modules and imports
  */
 import $ from 'jquery';
-import loadingGif from './hello';
+// const {loadingGifMain, loadingGifUpdate} = require('./hello');
+import loadingGifMain from './hello';
 import getMovies from './getMovies.js';
 
-loadingGif();
+// import loadingGifSubmit from './hello';
+// import loadingGifUpdate from './hello';
+// import loadingGifDelete from './hello';
+
+loadingGifMain();
+
 //============================================= Generate Movie List ====================================================
 const generateMovieList = () => {
     getMovies().then((movies) => {
 
+        // let htmlBuilder =
         let htmlBuilder = '<div id="movie-list">';
-        htmlBuilder += '<h1 id="movie-list-header">Movie List</h1><hr>';
-        htmlBuilder += '<table class="movies">';
-        htmlBuilder += '<tr>';
-        htmlBuilder += '<th>Movie Title</th>';
-        htmlBuilder += '<th>Rating</th>';
-        htmlBuilder += '<th>Actions</th>';
-        htmlBuilder += '</tr>';
+            htmlBuilder += '<table class="movies highlight centered responsive-table">';
+                htmlBuilder += '<thead>';
+                    htmlBuilder += '<tr>';
+                        htmlBuilder += '<th>Film</th>';
+                        htmlBuilder += '<th>Rating</th>';
+                        htmlBuilder += '<th>Actions</th>';
+                    htmlBuilder += '</tr>';
+            htmlBuilder += '</thead>';
 
+        // ===== show the stars in rating column ======
         movies.forEach(movie =>{
             movie['stars'] = "";
             for(let i = 0; i < movie.rating; i++){
@@ -26,26 +35,37 @@ const generateMovieList = () => {
             }
         });
 
-
+        // ===== show all movies ======
         movies.forEach(({title, stars, id}) => {
-            htmlBuilder += `<tr><td>${title}</td><td>${stars}</td>`;
-            htmlBuilder += `<td><a class="editBtn" data-id="${id}">Edit</a><a class="deleteBtn" data-id="${id}">DELETE</a></td></tr>`;
+            htmlBuilder += `<tr><td id="tdTitle">${title}</td><td id="tdStars">${stars}</td>`;
+            htmlBuilder += `<td id="tdBtns">` +
+                                `<i class="far fa-edit" id="editBtn" data-id="${id}"></i>` +
+                                `<i class="fas fa-ban" id="cancelBtn" data-id="${id}"></i>` +
+                                `<i class="fas fa-trash-alt" id="deleteBtn" data-id="${id}"></i>` +
+                                `<i class="fas fa-spinner fa-spin" id="deleteBtnGif"></i>` +
+                            `</td></tr>`;
         });
 
         htmlBuilder += '</table>';
-        htmlBuilder += '<div class="wrapper">' +
-            '<a id="addMovieBtn">Add Movie</a>' +
-            '</div>';
         htmlBuilder += '</div>';
 
+        let htmlBuilder2 = '<a id="addMovieBtn" class="waves-effect waves-light"><i class="fas fa-plus"></i> Add Movie...</a>';
+                            // '<a id="addMovieBtnGif" class="waves-effect waves-light"><img src=\'./page-loader.gif\' class=\'loader\' id="updateGif"></a>';
+
         $('.container').html(htmlBuilder).animate({opacity: 1});
+        $('.addMovie').html(htmlBuilder2).animate({opacity: 1});
         $('#movie-list').animate({opacity: 1});
+
+        // ====== click the add movie button to reveal the form =======
         $('#addMovieBtn').click(function () {
             $('.formArea').css({display: "inline-block"});
-            $('#submitMovie').css({display: "inline-block"});
-            $('#updateMovie').css({display: "none"});
+            $('#submitMovieBtn').css({display: "inline-block"});
+            $('#updateMovieBtn').css({display: "none"});
+            $('#movieTitleInput').focus();
+            $('#movieTitleInputLabel').css({display:"inline-block"});
             $('html,body').animate({
-              scrollTop: $("#form-section").offset().top}, 'slow');
+              scrollTop: $("#form-section").offset().top
+            }, 'slow');
             clearForm();
         });
 
@@ -57,9 +77,10 @@ const generateMovieList = () => {
 generateMovieList();
 
 //========================================== Submit Movie Form =========================================================
-    $('#submitMovie').click(function() {
-        let title = $('#formMovieTitle').val();
-        let rating = $('#formMovieRating').val();
+
+    $('#submitMovieBtn').click(function() {
+        let title = $('#movieTitleInput').val();
+        let rating = $('#selectMovieRating').val();
         let movie = {
             title: title,
             rating: rating,
@@ -78,43 +99,66 @@ generateMovieList();
           generateMovieList();
         });
         clearForm();
-        loadingGif();
+        // loadingGifSubmit();
     });
 
     let clearForm = () => {
-        $('#formMovieTitle').val('');
-        $('#formMovieRating').val('');
+        $('#movieTitleInput').val('');
+        $('#selectMovieRating').val('');
     };
 
 //==================================================== Edit Movie ======================================================
 
-$('.container').on("click", ".editBtn", function(e) {
+$('.container').on("click", "#editBtn", function(e) {
 
-        //after you click the edit button: scroll down to form:
+    $(this).hide();
+    $(this).siblings('#cancelBtn').show();
+
+    $('#cancelBtn').click(function() {
+        $(this).siblings('#editBtn').show();
+        $(this).hide();
+        clearForm();
+        $('#movieTitleInputLabel').focus();
+        $('#updateMovieBtn').hide();
+        $('#submitMovieBtn').show();
+
+    });
+
+    //after you click the edit button: scroll down to form:
         $('.formArea').css({display: "inline-block"});
         $('html,body').animate({
             scrollTop: $("#form-section").offset().top}, 'slow');
+
         //hide the submit button:
-        $('#submitMovie').css({display: "none"});
+        // $('#submitMovie').css({display: "none"});
+        $('#submitMovieBtn').hide();
         //reveal the edit button:
-        $('#updateMovie').css({display: "inline-block"});
+        // $('#updateMovie').css({display: "inline-block"});
+        $('#updateMovieBtn').show();
+        // hide the materialize css placeholder and place cursor in input field (focus):
+        $('#movieTitleInputLabel').css({display: "none"}).focus();
+
         // grab the id from the edit button and add it to the update button
-        $('#updateMovie').attr("data-id", $(this).attr("data-id"));
+        $('#updateMovieBtn').attr("data-id", $(this).attr("data-id"));
         // traverse the dom and look for the values in the table and save those to variables. make sure "e"target is in the above function parameter: function(e)
         let getTitle = ($(e.target).parent().parent().children().first().html()); // finds the title in the table
         let getRating = ($(e.target).parent().parent().children().eq(1).html());  // finds the rating in the table
         // populate the form fields with that newly found data:
-        $('#formMovieTitle').val(getTitle);
-        $('#formMovieRating').val(getRating);
+        $('#movieTitleInput').val(getTitle);
+        $('#selectMovieRating').val(getRating); //NEEDS TO POPULATE THE OPTION VALUE...DOES NOT?
+});
 
         //======================================== Update Movie ========================================================
 
-        $('#updateMovie').click( function() {
-          loadingGif();
+        $('#updateMovieBtn').click( function() {
+
+            $('#updateMovieBtn').hide();
+            $('#updateMovieBtnGif').show();
+            // $('#updateGif').show();
 
             let id = $(this).attr("data-id");
-            let title = $('#formMovieTitle').val();
-            let rating = $('#formMovieRating').val();
+            let title = $('#movieTitleInput').val();
+            let rating = $('#selectMovieRating').val();
             let movie = {
                 title: title,
                 rating: rating,
@@ -126,20 +170,25 @@ $('.container').on("click", ".editBtn", function(e) {
                 },
                 method: "PATCH",
                 body: JSON.stringify({title, rating})
-            }).then((response) => {
-                response.json();
+            // }).then((response) => {
+            //     response.json();
             }).then(() => {
+                $('#updateMovieBtnGif').hide();
                 generateMovieList();
+                clearForm();
+                $('#submitMovieBtn').show();
             });
         });
-});
+
 
 //=================================================== DELETE Movie =====================================================
 
-$('.container').on("click", ".deleteBtn", function() { //any descendants in container with class deletebtn will have a click listener on it.
+$('.container').on("click", "#deleteBtn", function() { //any descendants in container with class deletebtn will have a click listener on it.
+
+    $('#deleteBtn').hide();
+    $('#deleteBtnGif').css({display: "inline-block"});
 
     let id = $(this).attr("data-id");
-    loadingGif();
 
     fetch(`/api/movies/${id}`, {
         headers: {

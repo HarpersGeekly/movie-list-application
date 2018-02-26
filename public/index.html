@@ -7,16 +7,16 @@
 <!-- -the movie list expands with newly added entries -->
 
 <!DOCTYPE html>
-<html lang="en">
 <head>
     <meta charset="UTF-8" />
     <title>My Application</title>
     <link rel="stylesheet" href="style.css" />
     <!-- Compiled and minified CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
-    <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
+    <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
 </head>
 <body>
+    <!--<div class="overlay">-->
     <h1 id="movie-list-header">Movie List</h1>
 
     <div class="container">
@@ -24,31 +24,22 @@
     </div>
     <div class="addMovie">
         <!--this will be generated-->
+        <a id="addMovieBtn" class="waves-effect waves-light"><i class="fas fa-plus"></i> Add Movie...</a>
     </div>
 
         <div class="formArea">
             <a id="form-section"></a>
-            <form method="post" action="/db.json">
+            <form method="post" action="/db.json" id="movieForm">
 
-                <!--<div class="input-field col s12">-->
-                    <!--<input class="validate" type="text" id="formMovieTitle" required>-->
-                    <!--<label for="formMovieTitle" class="active">Enter a Movie Title</label>-->
-                    <!--<input type="hidden" name="id">-->
-                <!--</div>-->
-
-                    <div class="input-field col s6">
-                        <label id="movieTitleFormPlaceholder" for="formMovieTitle" class="active">title:</label>
-                        <input type="text" class="validate" id="formMovieTitle">
-                    </div>
-
-                <div class="input-field col s6">
-                    <input id="last_name" type="text" class="validate">
-                    <label for="last_name">Last Name</label>
+                <div class="input-field col s6 inputField">
+                        <input type="hidden" name="id">
+                        <input id="movieTitleInput" type="text" name="title" required="" aria-required="true" data-length="60">
+                        <label for="movieTitleInput" id="movieTitleInputLabel">title:</label>
+                    <span class="error">This field is required</span>
                 </div>
 
-                <div>
-                    <!--<label for="formMovieRating" id="labelStarRating">Star Rating</label>-->
-                    <select class="browser-default" id="formMovieRating" name="Rating">
+                <div class="divMovieRating">
+                    <select class="browser-default validate" id="selectMovieRating" name="rating" required="">
                         <option id="labelStarRating" value="" disabled selected>Rating</option>
                         <option value="1">&#9733 </option>
                         <option value="2">&#9733 &#9733 </option>
@@ -56,20 +47,71 @@
                         <option value="4">&#9733 &#9733 &#9733 &#9733 </option>
                         <option value="5">&#9733 &#9733 &#9733 &#9733 &#9733 </option>
                     </select>
+                    <span class="error">This field is required</span>
                 </div>
 
             </form>
-            <button id="submitMovie" class="btn btn-primary">click to submit movie</button>
-            <button id="updateMovie" class="btn btn-primary">click to update movie</button>
+            <button id="submitMovieBtn" class="btn btn-primary waves-effect waves-light">click to submit movie</button>
+            <button id="updateMovieBtn" class="btn btn-primary waves-effect waves-light">click to update movie</button>
+            <button id="updateMovieBtnGif" class="btn btn-primary"><img src='./page-loader.gif' class="loader"></button>
+
         </div>
 
     <script src="/main.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https//cdnjs.cloudflare.com/ajax/libs/jquery-form-validator/2.3.26/jquery.form-validator.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js">
 
         $(document).ready(function() {
             Materialize.updateTextFields();
+            $('#movieTitleInput').characterCounter();
+
+            $('#movieForm').validate({ // initialize the plugin
+                rules: {
+                    title: {
+                        required: true,
+                        email: true,
+                        minlength: 60,
+                    },
+                    rating: {
+                        required: true,
+                        // minlength: 5
+                    }
+                }
+            });
+
         });
 
+
+        // $('.form').find('input, textarea').on('keyup blur focus', function (e) {
+        //
+        //     var label = $(this).siblings('label').first();
+        //
+        //     if (e.type === 'keyup') {
+        //         if ($(this).val() === '') {
+        //             label.removeClass('active highlight active-middle');
+        //         } else if (label.hasClass('middle')) {
+        //             label.addClass('active-middle')
+        //         } else {
+        //             label.addClass('active highlight');
+        //         }
+        //     } else if (e.type === 'blur') {
+        //         if($(this).val() === '' ) {
+        //             label.removeClass('active highlight active-middle');
+        //         } else {
+        //             label.removeClass('highlight');
+        //         }
+        //     } else if (e.type === 'focus') {
+        //         if( $(this).val() === '' ) {
+        //             label.removeClass('highlight active-middle');
+        //         } else if($(this).val() !== '' ) {
+        //             label.addClass('highlight');
+        //         }
+        //     }
+        //
+        // });
+
     </script>
+    <!--</div>-->
 </body>
 </html>
