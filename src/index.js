@@ -39,10 +39,15 @@ const generateMovieList = () => {
         movies.forEach(({title, stars, id}) => {
             htmlBuilder += `<tr><td id="tdTitle">${title}</td><td id="tdStars">${stars}</td>`;
             htmlBuilder += `<td id="tdBtns">` +
-                                `<i class="far fa-edit" id="editBtn" data-id="${id}"></i>` +
-                                `<i class="fas fa-ban" id="cancelBtn" data-id="${id}"></i>` +
-                                `<i class="fas fa-trash-alt" id="deleteBtn" data-id="${id}"></i>` +
-                                `<i class="fas fa-spinner fa-spin" id="deleteBtnGif"></i>` +
+
+                                `<i class="far fa-edit editBtn" data-id="${id}"></i>` +
+
+                                `<i class="fas fa-ban cancelBtn" style="display:none" data-id="${id}"></i>` +
+
+                                `<i class="fas fa-trash-alt deleteBtn" data-id="${id}"></i>` +
+
+                                `<i class="fas fa-spinner fa-spin deleteBtnGif" style="display:none"></i>` +
+
                             `</td></tr>`;
         });
 
@@ -78,7 +83,10 @@ generateMovieList();
 
 //========================================== Submit Movie Form =========================================================
 
-    $('#submitMovieBtn').click(function() {
+    $('#submitMovieBtn').on("click", function() {
+
+        $('#submitMovieBtn').html(`<img src='./page-loader.gif' id="submitGif">`).css({width:"25.5%"});
+
         let title = $('#movieTitleInput').val();
         let rating = $('#selectMovieRating').val();
         let movie = {
@@ -97,9 +105,9 @@ generateMovieList();
             response.json();
         }).then(() => {
           generateMovieList();
+            clearForm();
+        $('#submitMovieBtn').html("click to submit movie");
         });
-        clearForm();
-        // loadingGifSubmit();
     });
 
     let clearForm = () => {
@@ -109,14 +117,14 @@ generateMovieList();
 
 //==================================================== Edit Movie ======================================================
 
-$('.container').on("click", "#editBtn", function(e) {
+$('.container').on("click", ".editBtn", function(e) {
 
     $(this).hide();
-    $(this).siblings('#cancelBtn').show();
+    $(this).siblings('.cancelBtn').show();
 
-    $('#cancelBtn').click(function() {
-        $(this).siblings('#editBtn').show();
+    $('.cancelBtn').click(function() {
         $(this).hide();
+        $(this).siblings('.editBtn').show();
         clearForm();
         $('#movieTitleInputLabel').focus();
         $('#updateMovieBtn').hide();
@@ -183,10 +191,11 @@ $('.container').on("click", "#editBtn", function(e) {
 
 //=================================================== DELETE Movie =====================================================
 
-$('.container').on("click", "#deleteBtn", function() { //any descendants in container with class deletebtn will have a click listener on it.
+$('.container').on("click", ".deleteBtn", function() { //any descendants in container with class deletebtn will have a click listener on it.
 
-    $('#deleteBtn').hide();
-    $('#deleteBtnGif').css({display: "inline-block"});
+    $(this).hide();
+    // $('.deleteBtnGif').css({display: "inline-block"});
+    $(this).siblings('.deleteBtnGif').show();
 
     let id = $(this).attr("data-id");
 

@@ -6,7 +6,6 @@ html, body {
 }
 
 body {
-    /*background: #dabe5e;*/
     background: url("https://images.pexels.com/photos/390089/film-movie-motion-picture-390089.jpeg?w=1260&h=750&auto=compress&cs=tinysrgb") no-repeat center center fixed;
     -webkit-background-size: cover;
     -moz-background-size: cover;
@@ -70,7 +69,7 @@ so if your image is 100x50px, margin should be -50px 0px 0px -25px.*/
 #movie-list-header {
     margin-bottom: 50px;
     font-family: "Big John";
-    font-size: 35px;
+    font-size: 3em;
     text-align: center;
     color: white;
 }
@@ -83,28 +82,22 @@ so if your image is 100x50px, margin should be -50px 0px 0px -25px.*/
     text-align: center;
 }
 
-/*.movies {*/
-    /*font-family: "PT Serif";*/
-    /*!*align-items: center;*!*/
-    /*justify-content: center;*/
-/*}*/
-
 #loader {
-    /*position: fixed;*/
-    /*left: 0px;*/
-    /*top: 0px;*/
     width: 8%;
     z-index: 9999;
-    /*background-image: url('page-loader.gif')*/
-    /*50% 50% no-repeat rgb(249,249,249);*/
 }
 
 table {
+    table-layout: fixed;
     font-family: "PT Serif", sans-serif;
     border-collapse: collapse;
     align-items: center;
     justify-content: center;
     text-align: center;
+}
+
+thead {
+    background-color: gold;
 }
 
 td, th {
@@ -117,59 +110,30 @@ td, th {
     text-align: center;
 }
 
-/*tr:nth-child(even) {*/
-    /*background-color: #dddddd;*/
-/*}*/
-
-/*.tdBtns {*/
-    /*display:inline-block;*/
-/*}*/
-#cancelBtn {
+.hidden {
     display: none;
+}
+
+.editBtn {
+    font-size: 1.5em;
+    padding-right: 0.5em;
+    cursor: pointer;
+}
+
+.cancelBtn {
     cursor: pointer;
     font-size: 1.5em;
     padding-right: 0.5em;
 }
 
-#editBtn {
-    /*float: left;*/
-    /*width: 10px;*/
-    /*height: 10px;*/
-    font-size: 1.5em;
-    padding-right: 0.5em;
-    /*color: white;*/
-    /*background: #838db4;*/
-    /*margin: 10px;*/
-    /*padding: 5px;*/
-    /*border-radius: 5%;*/
+.deleteBtn {
     cursor: pointer;
+    font-size: 1.5em;
+    padding-right:0.5em;
 }
 
-#deleteBtn {
-    /*float:right;*/
-    /*width: 10px;*/
-    /*height: 10px;*/
+.deleteBtnGif {
     font-size: 1.5em;
-    /*color: white;*/
-    /*background: #ff3336;*/
-    /*margin: 10px;*/
-    /*padding: 5px;*/
-    /*border-radius: 5%;*/
-    cursor: pointer;
-}
-
-#deleteBtnGif {
-    display: none;
-    /*float:right;*/
-    /*width: 10px;*/
-    /*height: 10px;*/
-    font-size: 1.5em;
-    /*color: white;*/
-    /*background: #ff3336;*/
-    /*margin: 10px;*/
-    /*padding: 5px;*/
-    /*border-radius: 5%;*/
-    cursor: pointer;
 }
 
 .addMovie {
@@ -179,11 +143,8 @@ td, th {
 
 #addMovieBtn{
     position: relative;
-    /*width: 10px;*/
-    /*height: 10px;*/
     color: white;
     background-color: black;
-    /*margin-top: 50px;*/
     padding: 5px;
     border-radius: 5%;
     align-items: center;
@@ -249,14 +210,11 @@ input[type=text] {
     display: inline-block;
     margin: 0 auto;
     width: 25%;
-    /*margin: 10px;*/
-    /*width: 10em;*/
     padding: 5px;
     box-sizing: border-box;
     font-size: 20px;
     font-weight: bold;
     font-family: "Big John";
-    /* text-align: center; */
     background-color: gold;
     border-radius: 5px;
     text-align: center;
@@ -264,13 +222,32 @@ input[type=text] {
 }
 
 #submitMovieBtn {
-    display:none;
     margin: 10px;
     padding: 5px 5px;
     border-radius: 5px;
     box-sizing: border-box;
     font-size: 25px;
     font-family: "Big John";
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    outline: none;
+    cursor: pointer;
+    background-color: black;
+}
+
+#submitGif {
+    height: 100%;
+}
+
+#submitMovieBtnGif {
+    display: none;
+    width:25.5%;
+    margin: 10px;
+    padding: 5px 5px;
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-size: 25px;
     align-items: center;
     justify-content: center;
     text-align: center;
@@ -295,9 +272,9 @@ input[type=text] {
 
 }
 
-/*#updateGif {*/
-    /*font-size:1em;*/
-/*}*/
+#updateGif {
+    height: 100%;
+}
 
 #updateMovieBtnGif {
     width:25.5%;
