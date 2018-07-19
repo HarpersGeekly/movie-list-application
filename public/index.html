@@ -6,6 +6,8 @@
 <!-- -delete button grabs the id in the same way but fetch DELETES to the json file.-->
 <!-- -the movie list expands with newly added entries -->
 
+<!-- to run this application, open up terminal and type "npm run dev" -->
+
 <!DOCTYPE html>
 <head>
     <meta charset="UTF-8" />
@@ -31,15 +33,15 @@
             <a id="form-section"></a>
             <form method="post" action="/db.json" id="movieForm">
 
-                <div class="input-field col s6 inputField">
+                <div class="input-field col s6 inputField form-group">
                         <input type="hidden" name="id">
-                        <input id="movieTitleInput" type="text" name="title" required="" aria-required="true" data-length="60">
+                        <input id="movieTitleInput" type="text" name="title" required="required" aria-required="true" class="validate" data-length="60">
                         <label for="movieTitleInput" id="movieTitleInputLabel">title:</label>
                     <span class="error">This field is required</span>
                 </div>
 
                 <div class="divMovieRating">
-                    <select class="browser-default validate" id="selectMovieRating" name="rating" required="">
+                    <select class="browser-default validate" id="selectMovieRating" name="rating" required="required" aria-required="true">
                         <option id="labelStarRating" value="" disabled selected>Rating</option>
                         <option value="1">&#9733 </option>
                         <option value="2">&#9733 &#9733 </option>
@@ -65,21 +67,6 @@
         $(document).ready(function() {
             Materialize.updateTextFields();
             $('#movieTitleInput').characterCounter();
-
-            $('#movieForm').validate({ // initialize the plugin
-                rules: {
-                    title: {
-                        required: true,
-                        email: true,
-                        minlength: 60,
-                    },
-                    rating: {
-                        required: true,
-                        // minlength: 5
-                    }
-                }
-            });
-
         });
 
 
