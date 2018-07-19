@@ -1,4 +1,7 @@
-const $ = require('jquery');
+// const $ = require('jquery');
+import $ from 'jquery';
+// choose either require or import and stick with it consistently over the app.
+//import is typically for front-end js, require typically back-end js
 
 const loadingGifMain = () => {
         $('.container').html("<img src='./page-loader.gif' id='loader'>");
