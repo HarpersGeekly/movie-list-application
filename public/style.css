@@ -74,13 +74,13 @@ so if your image is 100x50px, margin should be -50px 0px 0px -25px.*/
     color: white;
 }
 
-#movie-list {
-    margin-top: 20px;
-    margin-bottom: 20px;
-    opacity: 0;
-    font-size: 15px;
-    text-align: center;
-}
+/*#movie-list {*/
+    /*margin-top: 20px;*/
+    /*margin-bottom: 20px;*/
+    /*opacity: 0;*/
+    /*font-size: 15px;*/
+    /*text-align: center;*/
+/*}*/
 
 #loader {
     width: 8%;
@@ -89,7 +89,6 @@ so if your image is 100x50px, margin should be -50px 0px 0px -25px.*/
 
 table {
     table-layout: fixed;
-    font-family: "PT Serif", sans-serif;
     border-collapse: collapse;
     align-items: center;
     justify-content: center;
@@ -145,14 +144,11 @@ th {
     margin: 1em;
 }
 
-#addMovieBtn{
-    position: relative;
-    color: white;
-    background-color: black;
-    padding: 5px;
-    border-radius: 5%;
-    align-items: center;
-    justify-content: center;
+#addMovieBtn {
+    color: #fafafa;
+    background-color: #4caf50;
+    padding: 10px;
+    border-radius: 25px;
     cursor: pointer;
     font-family: "Slim Joe";
 }
