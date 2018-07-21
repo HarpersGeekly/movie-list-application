@@ -1,29 +1,54 @@
 {
   "movies": [
     {
-      "title": "the assassination of Jesse James by the Coward Robert Ford",
+      "title": "The Assassination of Jesse James by the Coward Robert Ford",
       "rating": "5",
       "id": 1
     },
     {
-      "title": "Fargo",
+      "title": "Master and Commander: The Far Side of the World",
       "rating": "5",
       "id": 2
     },
     {
-      "title": "every single star wars movie ever made",
-      "rating": "3",
+      "title": "Fargo",
+      "rating": "5",
       "id": 3
     },
     {
-      "title": "",
-      "rating": null,
-      "id": 18
+      "title": "Children of Men",
+      "rating": "5",
+      "id": 4
     },
     {
-      "title": "^^^ need form validation, bub ^^^",
+      "title": "The Elephant Man",
       "rating": "5",
-      "id": 19
+      "id": 5
+    },
+    {
+      "title": "The Thin Red Line",
+      "rating": "5",
+      "id": 6
+    },
+    {
+      "title": "Alien",
+      "rating": "5",
+      "id": 7
+    },
+    {
+      "title": "Robocop",
+      "rating": "5",
+      "id": 8
+    },
+    {
+      "title": "Terminator 2: Judgment Day",
+      "rating": "5",
+      "id": 9
+    },
+    {
+      "title": "Gallipoli",
+      "rating": "5",
+      "id": 10
     }
   ]
 }
