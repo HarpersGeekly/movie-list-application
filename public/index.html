@@ -14,11 +14,13 @@
     <title>My Application</title>
     <link rel="stylesheet" href="style.css" />
     <!-- Compiled and minified CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/css/materialize.min.css"/>
-    <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/css/materialize.min.css">
+    <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+    <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
 </head>
 <body>
-    <!--<div class="overlay">-->
     <h1 id="movie-list-header">Movie Lister</h1>
 
     <div class="container">
@@ -32,12 +34,13 @@
         <div class="formArea">
             <a id="form-section"></a>
 
-            <form method="post" action="/db.json" id="movieForm">
+            <form method="post" action="/db.json" id="movieForm" autocomplete="off">
 
                 <div class="input-field col s6 inputField">
                         <input type="hidden" name="id">
                         <label for="movieTitleInput" id="movieTitleInputLabel">title:</label>
-                        <input id="movieTitleInput" type="text" name="title" required="required" aria-required="true" class="validate" data-length="60">
+                        <input id="movieTitleInput" type="text" name="title" required="required" aria-required="true" class="validate" maxLength="60" data-length="60">
+                    <!--<span id="chars"></span>60<span> characters remaining</span>-->
                 </div>
 
                 <div class="input-field divMovieRating">
@@ -58,17 +61,9 @@
             <button id="updateMovieBtnGif" class="btn btn-primary"><img src='./page-loader.gif' id="updateGif"></button>
         </div>
 
-    <script src="/main.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/js/materialize.min.js"></script>
+    <script type="text/javascript" src="/main.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/js/materialize.min.js"></script>
     <script>
-
-    $(document).ready(function() {
-            // Materialize.updateTextFields();
-            $('#movieTitleInput').characterCounter();
-            $('select').formSelect();
-        });
-
     </script>
-    <!--</div>-->
 </body>
 </html>
