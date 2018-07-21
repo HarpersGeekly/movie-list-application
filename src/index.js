@@ -13,14 +13,12 @@ loadingGifMain();
 const generateMovieList = () => {
     getMovies().then((movies) => {
 
-        // let htmlBuilder =
-        let htmlBuilder = '<div id="movie-list">';
-            htmlBuilder += '<table class="movies highlight centered responsive-table">';
+            let htmlBuilder = '<table class="movies highlight centered responsive-table" id="movie-list">';
                 htmlBuilder += '<thead>';
                     htmlBuilder += '<tr>';
                         htmlBuilder += '<th>Film</th>';
                         htmlBuilder += '<th>Rating</th>';
-                        htmlBuilder += '<th>Actions</th>';
+                        htmlBuilder += '<th>Options</th>';
                     htmlBuilder += '</tr>';
             htmlBuilder += '</thead>';
 
@@ -34,16 +32,17 @@ const generateMovieList = () => {
 
         // ===== show all movies ======
         movies.forEach(({title, stars, id}) => {
+            console.log(title, stars, id);
             htmlBuilder += `<tr><td id="tdTitle">${title}</td><td id="tdStars">${stars}</td>`;
             htmlBuilder += `<td id="tdBtns">` +
 
-                                `<i class="far fa-edit editBtn" data-id="${id}"></i>` +
+                                `<i class="far fa-edit editBtn" disabled data-id="${id}"></i>` +
 
                                 `<i class="fa fa-spinner fa-spin editBtnGif" style="display: none"></i>` +
 
                                 `<i class="fas fa-ban cancelBtn" style="display: none" data-id="${id}"></i>` +
 
-                                `<i class="far fa-trash-alt deleteBtn" data-id="${id}"></i>` +
+                                `<i class="far fa-trash-alt deleteBtn" disabled data-id="${id}"></i>` +
 
                                 `<i class="fa fa-spinner fa-spin deleteBtnGif" style="display: none"></i>` +
 
@@ -51,13 +50,8 @@ const generateMovieList = () => {
         });
 
         htmlBuilder += '</table>';
-        htmlBuilder += '</div>';
-
-        let htmlBuilder2 = '<a id="addMovieBtn" class="waves-effect waves-light"><i class="fas fa-plus"></i> Add Movie...</a>';
-                            // '<a id="addMovieBtnGif" class="waves-effect waves-light"><img src=\'./page-loader.gif\' class=\'loader\' id="updateGif"></a>';
 
         $('.container').html(htmlBuilder).animate({opacity: 1});
-        $('.addMovie').html(htmlBuilder2).animate({opacity: 1});
         $('#movie-list').animate({opacity: 1});
 
         // ====== click the add movie button to reveal the form =======
@@ -82,34 +76,38 @@ generateMovieList();
 
 //========================================== Submit Movie Form =========================================================
 
-    $('#submitMovieBtn').on("click", function() {
+    $('#submitMovieBtn').on("click", function (e) {
+        e.preventDefault();
 
-        $('#submitMovieBtn').html(`<img src='./page-loader.gif' id="submitGif">`).css({width:"25.5%"});
+        if($('#movieTitleInput').val() !== "" && $('#selectMovieRating option:selected').val() !== "") {
+            $(this).attr("disabled", true);
 
-        let title = $('#movieTitleInput').val();
-        let rating = $('#selectMovieRating').val();
-        let movie = {
-            title: title,
-            rating: rating,
-        };
-        console.log(movie);
+            $('#submitMovieBtn').html(`<img src='./page-loader.gif' id="submitGif">`).css({width: "25.5%"});
 
-        fetch('/api/movies', {
-            headers: {
-                "content-type": "application/json"
-            },
-            method: "POST",
-            body: JSON.stringify({title, rating})
-        }).then( (response) => {
-            response.json();
-        }).then(() => {
-            generateMovieList();
-            clearForm();
-            $('#submitMovieBtn').html("click to submit movie");
-            $('#movieTitleInputLabel').focus();
-        });
+            let title = $('#movieTitleInput').val();
+            let rating = $('#selectMovieRating').val();
+            let movie = {
+                title: title,
+                rating: rating,
+            };
+
+            fetch('/api/movies', {
+                headers: {
+                    "content-type": "application/json"
+                },
+                method: "POST",
+                body: JSON.stringify({title, rating})
+            }).then((response) => {
+                response.json();
+            }).then(() => {
+                generateMovieList();
+                clearForm();
+                $('#submitMovieBtn').removeAttr("disabled");
+                $('#submitMovieBtn').html("click to submit movie");
+                $('#movieTitleInputLabel').focus();
+            });
+        }
     });
-
 
 
     let clearForm = () => {
@@ -123,14 +121,15 @@ $('.container').on("click", ".editBtn", function() {
 
     $(this).siblings('.editBtnGif').css({display: "inline-block"});
     $(this).css({display: "none"});
+    $('.editBtn').prop("disabled",true);  // Disable all other buttons of this class name. "disabled" must be on the html element
+    $('.deleteBtn').prop("disabled",true);
+
 
     let id = $(this).attr("data-id");
 
     let request = $.ajax({
         url: '/api/movies/' + id,
         method: 'GET',
-        dataType: 'json',
-        contentType: "application/json; charset=utf-8",
         data: id
     });
     request.done((movie) => {
@@ -141,20 +140,21 @@ $('.container').on("click", ".editBtn", function() {
         //after you click the edit button: scroll down to form:
         $('.formArea').css({display: "inline-block"});
         $('html,body').animate({
-            scrollTop: $("#form-section").offset().top}, 'slow');
+            scrollTop: $("#form-section").offset().top}, 'fast');
 
         $('select').val(movie.rating);
         $('#movieTitleInput').val(movie.title);
         //hide the submit button:
-        // $('#submitMovie').css({display: "none"});
         $('#submitMovieBtn').css({display: "none"});
         //reveal the edit button:
-        // $('#updateMovie').css({display: "inline-block"});
         $('#updateMovieBtn').css({display: "inline-block"});
         // hide the materialize css placeholder and place cursor in input field (focus):
         $('#movieTitleInputLabel').focus();
         // grab the id from the edit button and add it to the update button
         $('#updateMovieBtn').attr("data-id", $(this).attr("data-id"));
+        // Allow other buttons to be clicked again
+        $('.deleteBtn').prop("disabled", false);
+        $('.editBtn').prop("disabled",false);
 
     });
 });
@@ -175,33 +175,38 @@ $('.container').on("click", ".cancelBtn", function() {
 
 $('#updateMovieBtn').on("click", function() {
 
-    $('#updateMovieBtn').hide();
-    $('#updateMovieBtnGif').show();
-    // $('#updateGif').show();
+    if($('#movieTitleInput').val() !== "" && $('#selectMovieRating option:selected').val() !== "") {
+        $(this).attr("disabled", true);
 
-    let id = $(this).attr("data-id");
-    let title = $('#movieTitleInput').val();
-    let rating = $('#selectMovieRating').val();
-    let movie = {
-        title: title,
-        rating: rating,
-        id: id
-    };
-    fetch(`/api/movies/${id}`, {
-        headers: {
-            "content-type": "application/json"
-        },
-        method: "PATCH",
-        body: JSON.stringify({title, rating})
-    // }).then((response) => {
-    //     response.json();
-    }).then(() => {
-        $('#updateMovieBtnGif').hide();
-        $('#submitMovieBtn').show();
-        generateMovieList();
-        clearForm();
-        $('#movieTitleInputLabel').focus();
-    });
+        $('#updateMovieBtn').hide();
+        $('#updateMovieBtnGif').show();
+
+        let id = $(this).attr("data-id");
+        let title = $('#movieTitleInput').val();
+        let rating = $('#selectMovieRating').val();
+        let movie = {
+            title: title,
+            rating: rating,
+            id: id
+        };
+        fetch(`/api/movies/${id}`, {
+            headers: {
+                "content-type": "application/json"
+            },
+            method: "PATCH",
+            body: JSON.stringify({title, rating})
+        }).then(() => {
+            $('#updateMovieBtnGif').hide();
+            $('#submitMovieBtn').show();
+            generateMovieList();
+            clearForm();
+            $('#movieTitleInputLabel').focus();
+            $("html, body").animate({
+                    scrollTop: $(".editBtn").offset().top
+                },
+                'fast');
+        });
+    }
 });
 
 //============================================ Delete Movie ============================================================
@@ -209,8 +214,9 @@ $('#updateMovieBtn').on("click", function() {
 $('.container').on("click", ".deleteBtn", function() { //any descendants in container with class deletebtn will have a click listener on it.
 
     $(this).hide();
-    // $('.deleteBtnGif').css({display: "inline-block"});
     $(this).siblings('.deleteBtnGif').show();
+    $('.editBtn').prop("disabled",true);
+    $('.deleteBtn').prop("disabled",true);
 
     let id = $(this).attr("data-id");
 
@@ -220,11 +226,12 @@ $('.container').on("click", ".deleteBtn", function() { //any descendants in cont
         },
         method: "DELETE",
     }).then(() => {
-        getMovies().then((movie) => {
-            generateMovieList();
-            clearForm();
-            $('#movieTitleInputLabel').focus();
-        });
+        generateMovieList();
+        clearForm();
+        $('#movieTitleInputLabel').focus();
+        $('.deleteBtn').prop("disabled", false);
+        $('.editBtn').prop("disabled",false);
+
     });
 });
 
