@@ -109,6 +109,10 @@ td, th {
     text-align: center;
 }
 
+td {
+    word-wrap:break-word;
+}
+
 th {
     font-size:1.5em;
 }
@@ -247,12 +251,13 @@ input[type=text] {
 
 #submitMovieBtnGif {
     display: none;
-    width:25.5%;
+    width: 25.5%;
     margin: 10px;
     padding: 5px 5px;
     border-radius: 5px;
     box-sizing: border-box;
     font-size: 25px;
+    font-family: "Big John";
     align-items: center;
     justify-content: center;
     text-align: center;
@@ -282,7 +287,6 @@ input[type=text] {
 }
 
 #updateMovieBtnGif {
-    width:25.5%;
     display:none;
     margin: 10px;
     padding: 5px 5px;
@@ -393,6 +397,19 @@ and also iPads specifically.
         border-radius: 50px;
         font-size: 1.5em;
         font-weight: bold;
+    }
+
+    #movieTitleInput {
+        margin-top: 1em;
+        margin-bottom: 1em;
+    }
+
+    #submitMovieBtnGif {
+        width: 95%;
+    }
+
+    #updateMovieBtnGif {
+        width: 95%;
     }
 
 }

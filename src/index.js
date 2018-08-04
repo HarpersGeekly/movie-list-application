@@ -82,7 +82,9 @@ generateMovieList();
         if($('#movieTitleInput').val() !== "" && $('#selectMovieRating option:selected').val() !== "") {
             $(this).attr("disabled", true);
 
-            $('#submitMovieBtn').html(`<img src='./page-loader.gif' id="submitGif">`).css({width: "25.5%"});
+            // $('#submitMovieBtn').html(`<img src='./page-loader.gif' id="submitGif">`).css({});
+            $('#submitMovieBtn').hide();
+            $('#submitMovieBtnGif').show();
 
             let title = $('#movieTitleInput').val();
             let rating = $('#selectMovieRating').val();
@@ -102,8 +104,9 @@ generateMovieList();
             }).then(() => {
                 generateMovieList();
                 clearForm();
+                $('#submitMovieBtnGif').hide();
                 $('#submitMovieBtn').removeAttr("disabled");
-                $('#submitMovieBtn').html("click to submit movie");
+                $('#submitMovieBtn').show();
                 $('#movieTitleInputLabel').focus();
             });
         }
@@ -201,10 +204,10 @@ $('#updateMovieBtn').on("click", function() {
             generateMovieList();
             clearForm();
             $('#movieTitleInputLabel').focus();
-            $("html, body").animate({
-                    scrollTop: $(".editBtn").offset().top
-                },
-                'fast');
+            // $("html, body").animate({
+            //         scrollTop: $(".editBtn").offset().top
+            //     },
+            //     'fast');
         });
     }
 });
