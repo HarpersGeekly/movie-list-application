@@ -11,6 +11,7 @@
 <!DOCTYPE html>
 <head>
     <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>My Application</title>
     <link rel="stylesheet" href="style.css" />
     <!-- Compiled and minified CSS -->
@@ -28,7 +29,7 @@
     </div>
 
     <div class="addMovie">
-        <button id="addMovieBtn" class="waves-effect waves-light"><i class="fas fa-plus"></i> Add Movie...</button>
+        <button id="addMovieBtn" class="waves-effect waves-light">Add Movie</button>
     </div>
 
         <div class="formArea">
@@ -52,6 +53,9 @@
                         <option value="4">&#9733 &#9733 &#9733 &#9733 </option>
                         <option value="5">&#9733 &#9733 &#9733 &#9733 &#9733 </option>
                     </select>
+                    <span class="rating-caret">
+                        <i class="fas fa-caret-down fa-2x" aria-hidden="true"></i>
+                    </span>
                 </div>
 
             </form>
@@ -63,7 +67,5 @@
 
     <script type="text/javascript" src="/main.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/js/materialize.min.js"></script>
-    <script>
-    </script>
 </body>
 </html>

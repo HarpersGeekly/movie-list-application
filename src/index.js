@@ -13,7 +13,7 @@ loadingGifMain();
 const generateMovieList = () => {
     getMovies().then((movies) => {
 
-            let htmlBuilder = '<table class="movies highlight centered responsive-table" id="movie-list">';
+            let htmlBuilder = '<table class="movies highlight centered" id="movie-list">';
                 htmlBuilder += '<thead>';
                     htmlBuilder += '<tr>';
                         htmlBuilder += '<th>Film</th>';
