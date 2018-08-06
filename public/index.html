@@ -9,6 +9,7 @@
 <!-- to run this application, open up terminal and type "npm run dev" -->
 
 <!DOCTYPE html>
+<html lang="en">
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -40,7 +41,7 @@
                 <div class="input-field col s6 inputField">
                         <input type="hidden" name="id">
                         <label for="movieTitleInput" id="movieTitleInputLabel">title:</label>
-                        <input id="movieTitleInput" type="text" name="title" required="required" aria-required="true" class="validate" maxLength="60" data-length="60">
+                        <input id="movieTitleInput" type="text" name="title" required="required" aria-required="true" class="validate" maxlength="60" data-length="60">
                     <!--<span id="chars"></span>60<span> characters remaining</span>-->
                 </div>
 
@@ -61,9 +62,9 @@
             </form>
 
             <button id="submitMovieBtn" class="btn btn-primary waves-effect waves-light">click to submit movie</button>
-            <button id="submitMovieBtnGif" class="btn btn-primary"><img src='./page-loader.gif' id="submitGif"></button>
+            <button id="submitMovieBtnGif" class="btn btn-primary"><img src="./page-loader.gif" id="submitGif"></button>
             <button id="updateMovieBtn" class="btn btn-primary waves-effect waves-light">click to update movie</button>
-            <button id="updateMovieBtnGif" class="btn btn-primary"><img src='./page-loader.gif' id="updateGif"></button>
+            <button id="updateMovieBtnGif" class="btn btn-primary"><img src="./page-loader.gif" id="updateGif"></button>
         </div>
 
     <script type="text/javascript" src="/main.js"></script>
