@@ -199,6 +199,7 @@ $('#updateMovieBtn').on("click", function() {
             method: "PATCH",
             body: JSON.stringify({title, rating})
         }).then(() => {
+            $(this).attr("disabled", false);
             $('#updateMovieBtnGif').hide();
             $('#submitMovieBtn').show();
             generateMovieList();
