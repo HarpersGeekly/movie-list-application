@@ -6,7 +6,7 @@
     "dev": "concurrently 'webpack-dev-server --open' 'json-server -d1200 --watch db.json'",
     "build": "webpack -p",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node ./src/index.js"
+    "start": "node server.js"
   },
   "keywords": [],
   "author": "",
